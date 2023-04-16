@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('todo/create', [TodoController::class, 'store'])->name('api.todo.create');
+Route::post('todo/create', [TodoControllerMyTest::class, 'store'])->name('api.todo.myCreate');
