@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\TodoController;
+use App\Http\Controllers\Api\TodoControllerMyTest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('todo/create', [TodoController::class, 'store'])->name('api.todo.create');
-Route::post('todo/create', [TodoControllerMyTest::class, 'store'])->name('api.todo.myCreate');
+Route::post('todo/myCreate', [TodoControllerMyTest::class, 'store'])->name('api.todo.myCreate');

@@ -5,10 +5,12 @@ namespace Tests\Feature\Api;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Todo;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TodoControllerMyTest extends TestCase
 {
-    // use DatabaseTransactions;
+    use DatabaseTransactions;
     // traitは一回実行したらもう実行しなくてOK
     // trait=テストで使用したデータをテスト終了時にDBから削除してくれる便利な機能。テストをする度にデータがDBに増えないようにしてくれる
 
@@ -28,11 +30,14 @@ class TodoControllerMyTest extends TestCase
     public function TodoMy新規作成()
     {
         $params = [
-            'title' => 'テスト：失敗させます'
+            'title' => 'テスト：失敗させます',
+            // 'content' => 'テストです'
         ];
 
         // $res＝response
+        // 実行
         $res = $this->postJson(route('api.todo.create'), $params);
+        // 検証
         $res->assertOk();
         $todos = Todo::all();
 
@@ -44,5 +49,6 @@ class TodoControllerMyTest extends TestCase
         // DBはDatabaseTransactionsのおかげでテスト終了時にロールバックをされている（きれいに）ので、$todosには、$paramsだけが残っている＝最初のモデルは$params
 
         $this->assertEquals($params['title'], $todo->title);
+        // $this->assertEquals($params['content'], $todo->content);
     }
 }
