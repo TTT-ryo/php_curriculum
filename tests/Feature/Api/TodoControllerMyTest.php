@@ -11,8 +11,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class TodoControllerMyTest extends TestCase
 {
     use DatabaseTransactions;
-    // traitは一回実行したらもう実行しなくてOK
-    // trait=テストで使用したデータをテスト終了時にDBから削除してくれる便利な機能。テストをする度にデータがDBに増えないようにしてくれる
 
     public function setUp():void
     {
