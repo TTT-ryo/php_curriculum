@@ -16,6 +16,8 @@ class TodoControllerMyTest extends TestCase
     {
         parent::setUp();
         // setUp()メソッドは、テストメソッドを実行する前に準備をするためのメソッド（変数の初期化等）
+        $this->artisan('migrate:fresh');
+        // モデルの中を綺麗にする。use RefreshDatabaseを使用しない時の対応策
     }
 
     /**
@@ -28,25 +30,26 @@ class TodoControllerMyTest extends TestCase
     public function TodoMy新規作成()
     {
         $params = [
-            'title' => 'テスト：失敗させます',
-            // 'content' => 'テストです'
+            'title' => '新規作成のテストですか？',
+            'content' => '新規作成のテストです'
         ];
 
         // $res＝response
-        // 実行
+        // 実行 $paramsをJson形式でrouteに渡す
         $res = $this->postJson(route('api.todo.create'), $params);
-        // 検証
+        // 検証 送信ができたか
         $res->assertOk();
-        $todos = Todo::all();
 
+        // Todoモデルから全件取得。1件だけになっているか
+        $todos = Todo::all();
         $this->assertCount(1, $todos);
         // $this->assertCount(1, $todos);で配列の数をカウント。
 
         $todo = $todos->first();
         // first()＝最初のモデルを取得するためのメソッド
         // DBはDatabaseTransactionsのおかげでテスト終了時にロールバックをされている（きれいに）ので、$todosには、$paramsだけが残っている＝最初のモデルは$params
-
+        // 取得した内容が$paramsと一致しているか
         $this->assertEquals($params['title'], $todo->title);
-        // $this->assertEquals($params['content'], $todo->content);
+        $this->assertEquals($params['content'], $todo->content);
     }
 }

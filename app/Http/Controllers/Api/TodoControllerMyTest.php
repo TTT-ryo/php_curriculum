@@ -35,6 +35,6 @@ class TodoControllerMyTest extends Controller
         ]);
         $this->todo->fill($validated)->save();
 
-        return ['message' => '失敗してください'];
+        return ['message' => 'OK'];
     }
 }
